@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>マイシンプルp5.jsゲーム</title>
+    <title>母の日の感謝アート</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <style>
       body {
@@ -10,33 +10,47 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        margin: 0;
       }
     </style>
   </head>
   <body>
     <script>
-      let x, y;
-      let vx, vy;
-
       function setup() {
-        createCanvas(400, 400);
-        x = width / 2;
-        y = height / 2;
-        vx = 2;
-        vy = 3;
+        createCanvas(windowWidth, windowHeight);
+        background(255);
       }
 
       function draw() {
-        background(220);
-        x += vx;
-        y += vy;
-        if (x > width || x < 0) {
-          vx *= -1;
+        // 描画を継続的に行う必要がないため、draw関数内の処理は空にしています
+      }
+
+      function mouseClicked() {
+        let petals = 8;
+        let angle = TWO_PI / petals;
+        let flowerRadius = 50;
+        let colors = ["#FFB7C5", "#FFC4CC", "#FFA6C9", "#FF82AB"];
+        let color = random(colors);
+
+        push();
+        translate(mouseX, mouseY);
+        noStroke();
+        fill(color);
+        for (let i = 0; i < petals; i++) {
+          rotate(angle);
+          ellipse(0, 25, flowerRadius, 20);
         }
-        if (y > height || y < 0) {
-          vy *= -1;
-        }
-        circle(x, y, 30);
+        pop();
+
+        // 中心に小さな丸を描く
+        fill(255);
+        circle(mouseX, mouseY, 20);
+
+        fill(0);
+        noStroke();
+        textSize(16);
+        textAlign(CENTER, CENTER);
+        text("ありがとう", mouseX, mouseY - 5);
       }
     </script>
   </body>
