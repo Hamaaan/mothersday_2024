@@ -16,41 +16,126 @@
   </head>
   <body>
     <script>
+      var point1 = new Array(2);
+      var point2 = new Array(2);
+      var d;
+      var r = 200;
+      var seed1;
+      var seed2;
+      var le_v = 600;
+
       function setup() {
         createCanvas(windowWidth, windowHeight);
-        background(255);
+        d = (85 * PI) / 360;
+        seed1 = random();
+        seed2 = random();
+        angleMode(DEGREES);
+        colorMode(HSB);
+        background((seed1 * 50 + 180) % 360, 75, 20); //white
+
+        textAlign(CENTER, CENTER);
+        textSize(20);
+        fill(200);
+
+        le_v = windowWidth;
+        le_v_h = windowHeight;
       }
+
+      var maxframe = 3300;
 
       function draw() {
-        // 描画を継続的に行う必要がないため、draw関数内の処理は空にしています
+        leaf2(2, 2);
+        leaf(2, 2);
+
+        var length = 6;
+        for (var i = 0; i < length; i++) {
+          parts(
+            ((2.5 - i / length) * (maxframe - frameCount / 2)) / maxframe,
+            i * 20
+          );
+        }
+
+        if (frameCount > maxframe) {
+          text("お母さんいつもありがとう", windowWidth / 2, windowHeight / 12);
+          textAlign(RIGHT);
+          textSize(10);
+          text("by yukihide", (windowWidth * 7) / 8, (windowHeight * 7) / 8);
+        }
       }
 
-      function mouseClicked() {
-        let petals = 8;
-        let angle = TWO_PI / petals;
-        let flowerRadius = 50;
-        let colors = ["#FFB7C5", "#FFC4CC", "#FFA6C9", "#FF82AB"];
-        let color = random(colors);
-
+      function parts(size, flower_r) {
+        r = (windowWidth / 6) * size;
         push();
-        translate(mouseX, mouseY);
-        noStroke();
-        fill(color);
-        for (let i = 0; i < petals; i++) {
-          rotate(angle);
-          ellipse(0, 25, flowerRadius, 20);
+        translate(windowWidth / 2, windowHeight / 2);
+        var n1 = ((1 - noise(seed1 + 0.01 * frameCount)) * r) / 4;
+        var n2 =
+          ((1 - noise(seed2 + 0.01 * frameCount * 4)) * r) / 4 + (r * 3) / 4;
+        n2 = n2 * (sin(frameCount / 2) / 2 + 1 / 2);
+        point1[0] = cos(d * frameCount - flower_r * PI) * n1;
+        point1[1] = sin(d * frameCount - flower_r * PI) * n1;
+        point2[0] = cos(d * frameCount - flower_r * PI) * n2;
+        point2[1] = sin(d * frameCount - flower_r * PI) * n2;
+        strokeWeight(8);
+        colorMode(HSB);
+        var value_h =
+          ((((cos(frameCount + flower_r * 15) + 1) / 17) * 360) % 360) +
+          seed1 * 50 +
+          280;
+        var value_s = abs(cos(frameCount / 2 + flower_r * 15)) * 70 + 20;
+        var value_b = abs(cos(frameCount + flower_r * 15)) * 40 + 60;
+
+        stroke(color(value_h % 360, value_s, value_b));
+        if (frameCount > maxframe) {
+          noLoop();
+        }
+        line(point1[0], point1[1], point2[0], point2[1]);
+        pop();
+      }
+
+      function leaf(size, flower_r) {
+        r = windowWidth / 3;
+        push();
+        translate(le_v / 2, le_v_h / 2 + (windowWidth / 6) * 3);
+        var n1 = ((1 - noise(seed1 + 0.01 * frameCount)) * r) / 4;
+        var n2 =
+          ((1 - noise(seed2 + 0.01 * frameCount * 4)) * r) / 4 + (r * 3) / 4;
+        n2 = n2 * (sin(frameCount / 2) / 2 + 1 / 2);
+
+        var offset = (6.75 * 360) / 4;
+        point1[0] = cos(d * frameCount + offset) * n1;
+        point1[1] = sin(d * frameCount + offset) * n1;
+        point2[0] = cos(d * frameCount + offset) * n2 * 2;
+        point2[1] = sin(d * frameCount + offset) * n2 * 2;
+        strokeWeight(8);
+        colorMode(HSB);
+        var value_s = abs(cos(frameCount / 2 + flower_r * 15)) * 70 + 20;
+        var value_b = abs(cos(frameCount + flower_r * 15)) * 40 + 60;
+
+        stroke(color(35, value_s - 14, value_b));
+
+        if (frameCount < 45) {
+          line(point1[0], point1[1], point2[0], point2[1]);
         }
         pop();
+      }
 
-        // 中心に小さな丸を描く
-        fill(255);
-        circle(mouseX, mouseY, 20);
+      function leaf2(size, flower_r) {
+        push();
+        point1[0] = windowWidth / 2;
+        point1[1] = windowHeight;
+        point2[0] = windowWidth / 2;
+        point2[1] = (windowWidth / 6) * 2 + windowHeight / 2;
+        strokeWeight(17);
+        colorMode(HSB);
+        var value_s = abs(cos(frameCount / 2 + flower_r * 15)) * 70 + 20;
+        var value_b = abs(cos(frameCount + flower_r * 15)) * 40 + 60;
 
-        fill(0);
-        noStroke();
-        textSize(16);
-        textAlign(CENTER, CENTER);
-        text("ありがとう", mouseX, mouseY - 5);
+        stroke(color(35, value_s, value_b - 35));
+
+        if (frameCount < 5) {
+          line(point1[0], point1[1], point2[0], point2[1]);
+        }
+        pop();
       }
     </script>
   </body>
