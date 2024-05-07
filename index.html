@@ -31,17 +31,19 @@
         seed2 = random();
         angleMode(DEGREES);
         colorMode(HSB);
-        background((seed1 * 50 + 180) % 360, 75, 20); //white
-
-        textAlign(CENTER, CENTER);
-        textSize(20);
-        fill(200);
+        background((seed1 * 50 + 180) % 360, 75, 20);
 
         le_v = windowWidth;
         le_v_h = windowHeight;
+
+        var length = windowHeight / 2;
+        for (var i = 0; i < length; i++) {
+          var ds = 2;
+          BG_grad(0, i * ds, windowWidth, i * ds);
+        }
       }
 
-      var maxframe = 3300;
+      var maxframe = 1900;
 
       function draw() {
         leaf2(2, 2);
@@ -56,9 +58,13 @@
         }
 
         if (frameCount > maxframe) {
+          noStroke();
+          textAlign(CENTER, CENTER);
+          textSize(windowHeight / 30);
+          fill(200);
           text("お母さんいつもありがとう", windowWidth / 2, windowHeight / 12);
           textAlign(RIGHT);
-          textSize(10);
+          textSize(windowHeight / 60);
           text("by yukihide", (windowWidth * 7) / 8, (windowHeight * 7) / 8);
         }
       }
@@ -80,7 +86,7 @@
         var value_h =
           ((((cos(frameCount + flower_r * 15) + 1) / 17) * 360) % 360) +
           seed1 * 50 +
-          280;
+          290;
         var value_s = abs(cos(frameCount / 2 + flower_r * 15)) * 70 + 20;
         var value_b = abs(cos(frameCount + flower_r * 15)) * 40 + 60;
 
@@ -136,6 +142,23 @@
           line(point1[0], point1[1], point2[0], point2[1]);
         }
         pop();
+      }
+
+      function BG_grad(x1, y1, x2, y2) {
+        colorMode(HSB);
+
+        var value_h = ((y1 * 40) / windowHeight + seed1 + 200) % 360;
+        var value_s = 40;
+        var value_b = abs(sin((y1 * 700) / windowHeight)) * 20;
+
+        stroke(color(value_h, value_s, (value_b % 20) + 20));
+
+        strokeWeight(20);
+
+        var n1 = cos(y1 * 0.48) + 1;
+        var n2 = sin(y2 * 0.5) + 1;
+
+        line(x1, y1 * n1, x2, y2 * n2);
       }
     </script>
   </body>
