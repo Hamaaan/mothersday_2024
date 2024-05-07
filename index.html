@@ -2,13 +2,42 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>お母さんありがとう2024</title>
+    <title>マイシンプルp5.jsゲーム</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+    </style>
   </head>
   <body>
-    <h1>こんにちは、GitHub Pages!</h1>
-    <p>
-      これは簡単なHTMLのサンプルです。GitHub Pagesで公開するために使用できます。
-    </p>
-    <p><a href="https://github.com/">GitHubの公式サイトへのリンク</a></p>
+    <script>
+      let x, y;
+      let vx, vy;
+
+      function setup() {
+        createCanvas(400, 400);
+        x = width / 2;
+        y = height / 2;
+        vx = 2;
+        vy = 3;
+      }
+
+      function draw() {
+        background(220);
+        x += vx;
+        y += vy;
+        if (x > width || x < 0) {
+          vx *= -1;
+        }
+        if (y > height || y < 0) {
+          vy *= -1;
+        }
+        circle(x, y, 30);
+      }
+    </script>
   </body>
 </html>
