@@ -31,7 +31,7 @@
         seed2 = random();
         angleMode(DEGREES);
         colorMode(HSB);
-        background((seed1 * 50 + 180) % 360, 75, 20);
+        background((seed1 * 50 + 300) % 360, 75, 60);
 
         le_v = windowWidth;
         le_v_h = windowHeight;
@@ -147,15 +147,15 @@
       function BG_grad(x1, y1, x2, y2) {
         colorMode(HSB);
 
-        var value_h = ((y1 * 40) / windowHeight + seed1 + 200) % 360;
-        var value_s = 40;
+        var value_h = ((y1 * 40) / windowHeight + seed1 + 300) % 360;
+        var value_s = 70;
         var value_b = abs(sin((y1 * 700) / windowHeight)) * 20;
 
-        stroke(color(value_h, value_s, (value_b % 20) + 20));
+        stroke(color(value_h, value_s, (value_b % 20) + 40));
 
         strokeWeight(20);
 
-        var n1 = cos(y1 * 0.48) + 1;
+        var n1 = cos(y1 * 0.57) + 1;
         var n2 = sin(y2 * 0.5) + 1;
 
         line(x1, y1 * n1, x2, y2 * n2);
