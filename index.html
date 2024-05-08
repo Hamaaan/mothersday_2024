@@ -147,7 +147,7 @@
       function BG_grad(x1, y1, x2, y2) {
         colorMode(HSB);
 
-        var value_h = ((y1 * 40) / windowHeight + seed1 + 300) % 360;
+        var value_h = ((y1 * 40) / windowHeight + seed1 * 50 + 275) % 360;
         var value_s = 70;
         var value_b = abs(sin((y1 * 700) / windowHeight)) * 20;
 
