@@ -68,11 +68,14 @@
         if (frameCount > maxframe) {
           noStroke();
           textAlign(CENTER, CENTER);
-          textSize(windowHeight / 30);
+          var rem = windowHeight / 30;
+          textSize(rem);
           fill(200);
-          text("お母さんいつもありがとう", windowWidth / 2, windowHeight / 12);
+          text("お母さん", windowWidth / 2, windowHeight / 12);
+          text("いつも", windowWidth / 2, windowHeight / 12 + rem * 1.25);
+          text("ありがとう", windowWidth / 2, windowHeight / 12 + rem * 2.5);
           textAlign(RIGHT);
-          textSize(windowHeight / 60);
+          textSize(rem / 2);
           text("by yukihide", (windowWidth * 7) / 8, (windowHeight * 7) / 8);
         }
       }
